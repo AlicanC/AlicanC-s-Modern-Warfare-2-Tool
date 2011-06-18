@@ -106,7 +106,20 @@ namespace ACMW2Tool
 
     class ListViewPlayerItem : ListViewItem
     {
-		public MW2PartystatePlayer PartystatePlayer { get; set; }
+		private MW2PartystatePlayer partystatePlayer;
+		public MW2PartystatePlayer PartystatePlayer
+		{
+			get
+			{
+				return partystatePlayer;
+			}
+			set
+			{
+				partystatePlayer = value;
+				
+				SubItems["PlayerName"].Text = PartystatePlayer.strippedPlayerName;
+			}
+		}
 
         public String PlayerIP { get; set; }
 

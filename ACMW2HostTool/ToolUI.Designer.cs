@@ -40,19 +40,7 @@
 			this.kickToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.dosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.deviceList = new System.Windows.Forms.ComboBox();
-			this.debugInfo = new System.Windows.Forms.ListView();
-			this.infoColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-			this.splitContainer2 = new System.Windows.Forms.SplitContainer();
 			this.playerListContextStrip.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
-			this.splitContainer1.Panel1.SuspendLayout();
-			this.splitContainer1.Panel2.SuspendLayout();
-			this.splitContainer1.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
-			this.splitContainer2.Panel1.SuspendLayout();
-			this.splitContainer2.Panel2.SuspendLayout();
-			this.splitContainer2.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// playerList
@@ -63,35 +51,37 @@
             this.columnCountry,
             this.columnHostName});
 			this.playerList.ContextMenuStrip = this.playerListContextStrip;
-			this.playerList.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.playerList.FullRowSelect = true;
 			this.playerList.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-			this.playerList.Location = new System.Drawing.Point(0, 0);
+			this.playerList.Location = new System.Drawing.Point(12, 39);
 			this.playerList.Name = "playerList";
-			this.playerList.Size = new System.Drawing.Size(622, 303);
+			this.playerList.Size = new System.Drawing.Size(560, 411);
 			this.playerList.TabIndex = 1;
 			this.playerList.UseCompatibleStateImageBehavior = false;
 			this.playerList.View = System.Windows.Forms.View.Details;
 			// 
 			// columnIP
 			// 
+			this.columnIP.DisplayIndex = 2;
 			this.columnIP.Text = "Player IP";
-			this.columnIP.Width = 100;
+			this.columnIP.Width = 120;
 			// 
 			// columnName
 			// 
-			this.columnName.Text = "Player Name";
-			this.columnName.Width = 120;
+			this.columnName.DisplayIndex = 0;
+			this.columnName.Text = "Name";
+			this.columnName.Width = 100;
 			// 
 			// columnCountry
 			// 
+			this.columnCountry.DisplayIndex = 1;
 			this.columnCountry.Text = "Country";
-			this.columnCountry.Width = 160;
+			this.columnCountry.Width = 120;
 			// 
 			// columnHostName
 			// 
 			this.columnHostName.Text = "Host Name";
-			this.columnHostName.Width = 200;
+			this.columnHostName.Width = 210;
 			// 
 			// playerListContextStrip
 			// 
@@ -131,91 +121,26 @@
 			// deviceList
 			// 
 			this.deviceList.DisplayMember = "Description";
-			this.deviceList.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.deviceList.FormattingEnabled = true;
-			this.deviceList.Location = new System.Drawing.Point(0, 0);
+			this.deviceList.Location = new System.Drawing.Point(12, 12);
 			this.deviceList.Name = "deviceList";
-			this.deviceList.Size = new System.Drawing.Size(622, 21);
+			this.deviceList.Size = new System.Drawing.Size(560, 21);
 			this.deviceList.TabIndex = 2;
 			this.deviceList.SelectedIndexChanged += new System.EventHandler(this.deviceList_SelectedIndexChanged);
-			// 
-			// debugInfo
-			// 
-			this.debugInfo.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.infoColumn});
-			this.debugInfo.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.debugInfo.Location = new System.Drawing.Point(0, 0);
-			this.debugInfo.Name = "debugInfo";
-			this.debugInfo.Size = new System.Drawing.Size(622, 179);
-			this.debugInfo.TabIndex = 3;
-			this.debugInfo.UseCompatibleStateImageBehavior = false;
-			this.debugInfo.View = System.Windows.Forms.View.Details;
-			// 
-			// infoColumn
-			// 
-			this.infoColumn.Text = "Info";
-			this.infoColumn.Width = 500;
-			// 
-			// splitContainer1
-			// 
-			this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.splitContainer1.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
-			this.splitContainer1.Location = new System.Drawing.Point(0, 0);
-			this.splitContainer1.Name = "splitContainer1";
-			this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
-			// 
-			// splitContainer1.Panel1
-			// 
-			this.splitContainer1.Panel1.Controls.Add(this.splitContainer2);
-			// 
-			// splitContainer1.Panel2
-			// 
-			this.splitContainer1.Panel2.Controls.Add(this.debugInfo);
-			this.splitContainer1.Size = new System.Drawing.Size(622, 516);
-			this.splitContainer1.SplitterDistance = 332;
-			this.splitContainer1.SplitterWidth = 5;
-			this.splitContainer1.TabIndex = 4;
-			// 
-			// splitContainer2
-			// 
-			this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.splitContainer2.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
-			this.splitContainer2.IsSplitterFixed = true;
-			this.splitContainer2.Location = new System.Drawing.Point(0, 0);
-			this.splitContainer2.Name = "splitContainer2";
-			this.splitContainer2.Orientation = System.Windows.Forms.Orientation.Horizontal;
-			// 
-			// splitContainer2.Panel1
-			// 
-			this.splitContainer2.Panel1.Controls.Add(this.deviceList);
-			// 
-			// splitContainer2.Panel2
-			// 
-			this.splitContainer2.Panel2.Controls.Add(this.playerList);
-			this.splitContainer2.Size = new System.Drawing.Size(622, 332);
-			this.splitContainer2.SplitterDistance = 25;
-			this.splitContainer2.TabIndex = 3;
 			// 
 			// ToolUI
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(622, 516);
-			this.Controls.Add(this.splitContainer1);
+			this.ClientSize = new System.Drawing.Size(584, 462);
+			this.Controls.Add(this.playerList);
+			this.Controls.Add(this.deviceList);
 			this.KeyPreview = true;
 			this.Name = "ToolUI";
 			this.Text = "AlicanC\'s Modern Warfare 2 Tool";
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
 			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
 			this.playerListContextStrip.ResumeLayout(false);
-			this.splitContainer1.Panel1.ResumeLayout(false);
-			this.splitContainer1.Panel2.ResumeLayout(false);
-			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
-			this.splitContainer1.ResumeLayout(false);
-			this.splitContainer2.Panel1.ResumeLayout(false);
-			this.splitContainer2.Panel2.ResumeLayout(false);
-			((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
-			this.splitContainer2.ResumeLayout(false);
 			this.ResumeLayout(false);
 
         }
@@ -229,12 +154,8 @@
         private System.Windows.Forms.ContextMenuStrip playerListContextStrip;
         private System.Windows.Forms.ToolStripMenuItem kickToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem dosToolStripMenuItem;
-        private System.Windows.Forms.ColumnHeader infoColumn;
-        private System.Windows.Forms.ColumnHeader columnName;
-		private System.Windows.Forms.SplitContainer splitContainer1;
-		private System.Windows.Forms.SplitContainer splitContainer2;
+		private System.Windows.Forms.ColumnHeader columnName;
 		public System.Windows.Forms.ListView playerList;
-		public System.Windows.Forms.ListView debugInfo;
 		private System.Windows.Forms.ToolStripMenuItem copyNameToolStripMenuItem;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
     }
