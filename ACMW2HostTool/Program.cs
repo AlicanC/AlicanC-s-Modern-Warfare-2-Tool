@@ -14,7 +14,7 @@ namespace ACMW2Tool
         static void Main()
         {
             Form.CheckForIllegalCrossThreadCalls = false;
-
+			
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new ToolUI());

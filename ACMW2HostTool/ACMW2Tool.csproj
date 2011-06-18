@@ -35,25 +35,20 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="PcapDotNet.Analysis, Version=0.8.0.0, Culture=neutral, PublicKeyToken=4b6f3e583145a652, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>PcapDotNet\PcapDotNet.Analysis.dll</HintPath>
+    <Reference Include="PcapDotNet.Analysis">
+      <HintPath>.\PcapDotNet.Analysis.dll</HintPath>
     </Reference>
-    <Reference Include="PcapDotNet.Base, Version=0.8.0.40525, Culture=neutral, PublicKeyToken=4b6f3e583145a652, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>PcapDotNet\PcapDotNet.Base.dll</HintPath>
+    <Reference Include="PcapDotNet.Base">
+      <HintPath>.\PcapDotNet.Base.dll</HintPath>
     </Reference>
-    <Reference Include="PcapDotNet.Core, Version=0.8.0.40542, Culture=neutral, PublicKeyToken=4b6f3e583145a652, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>PcapDotNet\PcapDotNet.Core.dll</HintPath>
+    <Reference Include="PcapDotNet.Core">
+      <HintPath>.\PcapDotNet.Core.dll</HintPath>
     </Reference>
-    <Reference Include="PcapDotNet.Core.Extensions, Version=0.8.0.40546, Culture=neutral, PublicKeyToken=4b6f3e583145a652, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>PcapDotNet\PcapDotNet.Core.Extensions.dll</HintPath>
+    <Reference Include="PcapDotNet.Core.Extensions">
+      <HintPath>.\PcapDotNet.Core.Extensions.dll</HintPath>
     </Reference>
-    <Reference Include="PcapDotNet.Packets, Version=0.8.0.40527, Culture=neutral, PublicKeyToken=4b6f3e583145a652, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>PcapDotNet\PcapDotNet.Packets.dll</HintPath>
+    <Reference Include="PcapDotNet.Packets">
+      <HintPath>.\PcapDotNet.Packets.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
