@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Resources;
 
 using System.Collections.ObjectModel;
 using System.Net;
@@ -35,7 +35,10 @@ namespace ACMW2Tool
         public ToolUI()
         {
             InitializeComponent();
-			
+
+			//Change the icon
+			Icon = Properties.Resources.iw4sp_1;
+
             //Try to get the devices
             try
             {

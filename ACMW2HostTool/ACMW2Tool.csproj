@@ -34,32 +34,22 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Resources\iw4sp_1.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
-    <Reference Include="PcapDotNet.Analysis">
-      <HintPath>.\PcapDotNet.Analysis.dll</HintPath>
-    </Reference>
-    <Reference Include="PcapDotNet.Base">
-      <HintPath>.\PcapDotNet.Base.dll</HintPath>
-    </Reference>
-    <Reference Include="PcapDotNet.Core">
+    <Reference Include="PcapDotNet.Core, Version=0.8.0.40542, Culture=neutral, PublicKeyToken=4b6f3e583145a652, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>.\PcapDotNet.Core.dll</HintPath>
     </Reference>
-    <Reference Include="PcapDotNet.Core.Extensions">
-      <HintPath>.\PcapDotNet.Core.Extensions.dll</HintPath>
-    </Reference>
-    <Reference Include="PcapDotNet.Packets">
+    <Reference Include="PcapDotNet.Packets, Version=0.8.0.40527, Culture=neutral, PublicKeyToken=4b6f3e583145a652, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>.\PcapDotNet.Packets.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IP2Country\BitVector.cs" />
@@ -114,8 +104,11 @@
     <Content Include="IP2Country\Databases\delegated-ripencc-latest.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\iw4sp_1.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- <Import Project="$(MSBuildExtensionsPath)\Ilmerge.CSharp.targets" /> -->
+  <!-- <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" /> -->
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
