@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using System.Reflection;
 
 namespace ACMW2Tool
 {
@@ -13,11 +14,11 @@ namespace ACMW2Tool
         [STAThread]
         static void Main()
         {
-            Form.CheckForIllegalCrossThreadCalls = false;
-			
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new ToolUI());
+			Form.CheckForIllegalCrossThreadCalls = false;
+
+			Application.EnableVisualStyles();
+			Application.SetCompatibleTextRenderingDefault(false);
+			Application.Run(new ToolUI());
         }
     }
 }

@@ -14,6 +14,7 @@ using System.Diagnostics;
 using System.Threading;
 using System.IO;
 using System.Runtime.InteropServices;
+using System.Reflection;
 
 using PcapDotNet.Core;
 using PcapDotNet.Packets;
@@ -36,8 +37,9 @@ namespace ACMW2Tool
         {
             InitializeComponent();
 
-			//Change the icon
+			//Change the icon and add the version to the title
 			Icon = Properties.Resources.iw4sp_1;
+			Text += " " + Assembly.GetExecutingAssembly().GetName().Version;
 
             //Try to get the devices
             try
@@ -98,12 +100,16 @@ namespace ACMW2Tool
 		{
 			foreach (ToolStripItem item in playerListContextStrip.Items)
 				item.Enabled = false;
+
+			if (playerList.SelectedItems.Count > 0)
+				copyNameToolStripMenuItem.Enabled = true;
 		}
 
 		private void copyNameToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Add support for multiple selections
-			Clipboard.SetText(((ListViewPlayerItem)playerList.SelectedItems[0]).PlayerName);
+			if (playerList.SelectedItems.Count > 0)
+				Clipboard.SetText(((ListViewPlayerItem)playerList.SelectedItems[0]).PlayerName);
 		}
     }
 

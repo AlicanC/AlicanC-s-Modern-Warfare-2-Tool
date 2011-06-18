@@ -38,7 +38,8 @@
     <ApplicationIcon>Resources\iw4sp_1.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="PcapDotNet.Analysis">
+    <Reference Include="PcapDotNet.Analysis, Version=0.8.0.0, Culture=neutral, PublicKeyToken=4b6f3e583145a652, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>.\PcapDotNet.Analysis.dll</HintPath>
     </Reference>
     <Reference Include="PcapDotNet.Base, Version=0.8.0.40525, Culture=neutral, PublicKeyToken=4b6f3e583145a652, processorArchitecture=MSIL">

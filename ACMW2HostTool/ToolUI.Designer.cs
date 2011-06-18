@@ -36,9 +36,6 @@
 			this.columnHostName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.playerListContextStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.copyNameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-			this.kickToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.dosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.deviceList = new System.Windows.Forms.ComboBox();
 			this.playerListContextStrip.SuspendLayout();
 			this.SuspendLayout();
@@ -86,12 +83,9 @@
 			// playerListContextStrip
 			// 
 			this.playerListContextStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.copyNameToolStripMenuItem,
-            this.toolStripSeparator1,
-            this.kickToolStripMenuItem,
-            this.dosToolStripMenuItem});
+            this.copyNameToolStripMenuItem});
 			this.playerListContextStrip.Name = "playerListContextStrip";
-			this.playerListContextStrip.Size = new System.Drawing.Size(153, 98);
+			this.playerListContextStrip.Size = new System.Drawing.Size(153, 48);
 			this.playerListContextStrip.Opening += new System.ComponentModel.CancelEventHandler(this.playerListContextStrip_Opening);
 			// 
 			// copyNameToolStripMenuItem
@@ -100,23 +94,6 @@
 			this.copyNameToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
 			this.copyNameToolStripMenuItem.Text = "Copy Name";
 			this.copyNameToolStripMenuItem.Click += new System.EventHandler(this.copyNameToolStripMenuItem_Click);
-			// 
-			// toolStripSeparator1
-			// 
-			this.toolStripSeparator1.Name = "toolStripSeparator1";
-			this.toolStripSeparator1.Size = new System.Drawing.Size(134, 6);
-			// 
-			// kickToolStripMenuItem
-			// 
-			this.kickToolStripMenuItem.Name = "kickToolStripMenuItem";
-			this.kickToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
-			this.kickToolStripMenuItem.Text = "Kick";
-			// 
-			// dosToolStripMenuItem
-			// 
-			this.dosToolStripMenuItem.Name = "dosToolStripMenuItem";
-			this.dosToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
-			this.dosToolStripMenuItem.Text = "DOS";
 			// 
 			// deviceList
 			// 
@@ -151,13 +128,10 @@
         private System.Windows.Forms.ColumnHeader columnCountry;
         private System.Windows.Forms.ComboBox deviceList;
         private System.Windows.Forms.ColumnHeader columnHostName;
-        private System.Windows.Forms.ContextMenuStrip playerListContextStrip;
-        private System.Windows.Forms.ToolStripMenuItem kickToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem dosToolStripMenuItem;
+		private System.Windows.Forms.ContextMenuStrip playerListContextStrip;
 		private System.Windows.Forms.ColumnHeader columnName;
 		public System.Windows.Forms.ListView playerList;
 		private System.Windows.Forms.ToolStripMenuItem copyNameToolStripMenuItem;
-		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
     }
 }
 
