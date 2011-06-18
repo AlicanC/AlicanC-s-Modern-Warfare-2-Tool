@@ -107,8 +107,6 @@ namespace ACMW2Tool
 
 			//Close the reader and the stream
 			binaryReader.Close();
-			memoryStream.Close(); // Is this line really needed?
-
 
 			//Lock the UI
 			lock (toolUI)
