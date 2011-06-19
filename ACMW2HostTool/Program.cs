@@ -6,23 +6,20 @@ using System.Reflection;
 
 using System.IO;
 
+using ACMW2Tool.Properties;
+
 namespace ACMW2Tool
 {
     static class Program
     {
-		public static string geoIPDatabasePath = "GeoIP.dat";
-
-        /// <summary>
-        /// The main entry point for the application.
-        /// </summary>
         [STAThread]
         static void Main()
         {
-			//Create a temporary GeoIP file if it doesn't exist
-			if (!File.Exists(geoIPDatabasePath))
+			//Create a temporary GeoIP file from resource if it doesn't exist
+			if (!File.Exists(Settings.Default.GeoIPDatabasePath))
 			{
-				geoIPDatabasePath = Path.GetTempFileName();
-				File.WriteAllBytes(geoIPDatabasePath, Properties.Resources.GeoIP);
+				Settings.Default.GeoIPDatabasePath = Path.GetTempFileName();
+				File.WriteAllBytes(Settings.Default.GeoIPDatabasePath, Properties.Resources.GeoIP);
 			}
 
 			Form.CheckForIllegalCrossThreadCalls = false;

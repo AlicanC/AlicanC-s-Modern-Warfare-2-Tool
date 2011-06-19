@@ -8,60 +8,64 @@ using System.Threading;
 using System.Net;
 using System.Windows.Forms;
 
-using PcapDotNet.Core;
-using PcapDotNet.Packets;
-using PcapDotNet.Packets.IpV4;
-using PcapDotNet.Packets.Transport;
+using SharpPcap;
+using PacketDotNet;
 
+using ACMW2Tool.Properties;
 using ACMW2Tool.MW2Stuff;
 
 namespace ACMW2Tool
 {
-	class PacketSnifferThread
+	class PacketCaptureThread
 	{
-		private LivePacketDevice livePacketDevice;
-		private PacketCommunicator packetCommunicator;
-		private Thread packetThread;
+		private ICaptureDevice captureDevice;
+		private Thread packetCaptureThread;
 		private ToolUI toolUI;
 		private Dictionary<IPAddress, MW2PartystatePlayer> partystatePlayers = new Dictionary<IPAddress, MW2PartystatePlayer>();
 
-		private LookupService lookupService = new LookupService(Program.geoIPDatabasePath, LookupService.GEOIP_MEMORY_CACHE);
+		private LookupService lookupService = new LookupService(Settings.Default.GeoIPDatabasePath, LookupService.GEOIP_MEMORY_CACHE);
 
-		public PacketSnifferThread(ToolUI toolUI, LivePacketDevice livePacketDevice)
+		public PacketCaptureThread(ICaptureDevice captureDevice, ToolUI toolUI)
 		{
 			//Store passed objects
+			this.captureDevice = captureDevice;
 			this.toolUI = toolUI;
-			this.livePacketDevice = livePacketDevice;
 
 			//Start the thread
-			packetThread = new Thread(PacketThreadStart);
-			packetThread.Start();
+			packetCaptureThread = new Thread(PacketCaptureThreadStart);
+			packetCaptureThread.Start();
 		}
 
-		public void End()
+		public void StopCapture()
 		{
-			if (packetCommunicator != null)
-				packetCommunicator.Break();
-			packetThread.Abort();
+			//Stop capture
+			if (captureDevice.Started)
+				captureDevice.StopCapture();
+			
+			//Abort the thread
+			packetCaptureThread.Abort();
 		}
 
-		private void PacketThreadStart()
+		private void PacketCaptureThreadStart()
 		{
-			//Open the communicatior
-			packetCommunicator = livePacketDevice.Open();
+			//Open the device
+			captureDevice.Open();
 
-			//Set filter to listen only to port 28960
-			packetCommunicator.SetFilter("port 28960");
+			//Set filter to capture only port 28960
+			captureDevice.Filter = "udp port 28960";
 
-			//Start receiving packets
-			packetCommunicator.ReceivePackets(0, PacketHandler);
+			//Add the event handler
+			captureDevice.OnPacketArrival += new PacketArrivalEventHandler(OnPacketArrival);
+
+			//Start capturing
+			captureDevice.StartCapture();
 		}
 
-		private void PacketHandler(Packet packet)
+		private void OnPacketArrival(Object sender, CaptureEventArgs captureEventArgs)
 		{
-			IpV4Datagram ipDatagram = packet.Ethernet.IpV4;
+			IPv4Packet ipv4Packet = (IPv4Packet)Packet.ParsePacket(LinkLayers.Ethernet, captureEventArgs.Packet.Data).PayloadPacket;
 
-			MemoryStream memoryStream = new MemoryStream(packet.Ethernet.Payload.ToArray());
+			MemoryStream memoryStream = new MemoryStream(ipv4Packet.Bytes);
 
 			BinaryReader binaryReader = new BinaryReader(memoryStream);
 
@@ -93,29 +97,29 @@ namespace ACMW2Tool
 
 				//Create files
 				String filePath = @"FailedPackets\0partystate-" + DateTime.Now.Ticks;
-				File.WriteAllBytes(filePath + ".bytes", packet.Ethernet.Payload.ToArray());
+				//File.WriteAllBytes(filePath + ".bytes", packet.Ethernet.Payload.ToArray());
 				File.WriteAllLines(filePath + ".txt", new String[] { e.Message, e.StackTrace });
 			}
 
 			//Close the reader and the stream
 			binaryReader.Close();
-
+			
 			//Lock the UI
 			lock (toolUI)
 			{
 				ListView.ListViewItemCollection playerItems = toolUI.playerList.Items;
 
 				//Update the source
-				if (playerItems.ContainsKey(ipDatagram.Source.ToString()))
-					((ListViewPlayerItem)playerItems[ipDatagram.Source.ToString()]).PlayerLastTime = DateTime.Now;
+				if (playerItems.ContainsKey(ipv4Packet.SourceAddress.ToString()))
+					((ListViewPlayerItem)playerItems[ipv4Packet.SourceAddress.ToString()]).PlayerLastTime = DateTime.Now;
 				else
-					playerItems.Add(new ListViewPlayerItem(lookupService, ipDatagram.Source));
+					playerItems.Add(new ListViewPlayerItem(lookupService, ipv4Packet.SourceAddress));
 
 				//Update the destination
-				if (playerItems.ContainsKey(ipDatagram.Destination.ToString()))
-					((ListViewPlayerItem)playerItems[ipDatagram.Destination.ToString()]).PlayerLastTime = DateTime.Now;
+				if (playerItems.ContainsKey(ipv4Packet.DestinationAddress.ToString()))
+					((ListViewPlayerItem)playerItems[ipv4Packet.DestinationAddress.ToString()]).PlayerLastTime = DateTime.Now;
 				else
-					playerItems.Add(new ListViewPlayerItem(lookupService, ipDatagram.Destination));
+					playerItems.Add(new ListViewPlayerItem(lookupService, ipv4Packet.DestinationAddress));
 
 				//Update entries
 				foreach (ListViewPlayerItem playerItem in playerItems)

@@ -39,6 +39,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -53,21 +54,11 @@
     <ApplicationIcon>Resources\iw4sp_1.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="PcapDotNet.Analysis, Version=0.8.0.0, Culture=neutral, PublicKeyToken=4b6f3e583145a652, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>.\PcapDotNet.Analysis.dll</HintPath>
+    <Reference Include="PacketDotNet">
+      <HintPath>SharpPcap 3.6.0\PacketDotNet.dll</HintPath>
     </Reference>
-    <Reference Include="PcapDotNet.Base, Version=0.8.0.40525, Culture=neutral, PublicKeyToken=4b6f3e583145a652, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>.\PcapDotNet.Base.dll</HintPath>
-    </Reference>
-    <Reference Include="PcapDotNet.Core, Version=0.8.0.40542, Culture=neutral, PublicKeyToken=4b6f3e583145a652, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>.\PcapDotNet.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="PcapDotNet.Packets, Version=0.8.0.40527, Culture=neutral, PublicKeyToken=4b6f3e583145a652, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>.\PcapDotNet.Packets.dll</HintPath>
+    <Reference Include="SharpPcap">
+      <HintPath>SharpPcap 3.6.0\SharpPcap.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -75,6 +66,7 @@
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="PacketCaptureThread.cs" />
     <Compile Include="GeoIP C# API 1.12\Country.cs" />
     <Compile Include="GeoIP C# API 1.12\DatabaseInfo.cs" />
     <Compile Include="GeoIP C# API 1.12\Location.cs" />
@@ -88,7 +80,6 @@
       <DependentUpon>ToolUI.cs</DependentUpon>
     </Compile>
     <Compile Include="MW2Stuff.cs" />
-    <Compile Include="PacketSnifferThread.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="ToolUI.resx">
@@ -105,8 +96,6 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <None Include="app.config" />
-    <None Include="GeoIP C# API 1.12\ChangeLog" />
-    <None Include="GeoIP C# API 1.12\README" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

@@ -16,10 +16,7 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Reflection;
 
-using PcapDotNet.Core;
-using PcapDotNet.Packets;
-using PcapDotNet.Packets.IpV4;
-using PcapDotNet.Packets.Transport;
+using SharpPcap;
 
 using ACMW2Tool.MW2Stuff;
 
@@ -27,9 +24,9 @@ namespace ACMW2Tool
 {
     public partial class ToolUI : Form
     {
-		private PacketSnifferThread packetSnifferThread;
-		private LivePacketDevice livePacketDevice = null;
-        private IList<LivePacketDevice> devices = new ReadOnlyCollection<LivePacketDevice>(new List<LivePacketDevice>());
+		private CaptureDeviceList captureDevices;
+		private ICaptureDevice captureDevice;
+		private PacketCaptureThread packetCaptureThread;
 
         public ToolUI()
         {
@@ -39,59 +36,60 @@ namespace ACMW2Tool
 			Icon = Properties.Resources.iw4sp_1;
 			Text += " " + Assembly.GetExecutingAssembly().GetName().Version;
 
-            //Try to get the devices
-            try
-            {
-                devices = LivePacketDevice.AllLocalMachine;
-            }
-            catch (InvalidOperationException exception)
-            {
-                MessageBox.Show(exception.Message);
-            }
+			//Device listing
+			try
+			{
+				//Get devices
+				captureDevices = SharpPcap.CaptureDeviceList.Instance;
 
-			//Add devices to the list
-			foreach (LivePacketDevice livePacketDevice in devices)
-				deviceList.Items.Add(livePacketDevice);
+				//Add devices to the list
+				foreach (ICaptureDevice captureDevice in captureDevices)
+					deviceList.Items.Add(captureDevice);
 
-            //Select the first device
-            if (deviceList.Items.Count > 0)
-                deviceList.SelectedIndex = 0;
+				//Select the first device
+				if (deviceList.Items.Count > 0)
+					deviceList.SelectedIndex = 0;
+			}
+			catch (InvalidOperationException exception)
+			{
+				MessageBox.Show(exception.Message);
+			}
         }
 
         private void deviceList_SelectedIndexChanged(object sender, EventArgs e)
         {
 			//Get the selected device
-			livePacketDevice = (LivePacketDevice)deviceList.SelectedItem;
+			captureDevice = (ICaptureDevice)deviceList.SelectedItem;
 
-			//Sniff
-			StartSniffing();
+			//Start capturing
+			StartCapture();
         }
 
-		private void StartSniffing()
+		private void StartCapture()
 		{
 			//End the packet sniffer thread
-			if (packetSnifferThread != null)
-				packetSnifferThread.End();
+			if (packetCaptureThread != null)
+				packetCaptureThread.StopCapture();
 
 			//Clear the list
 			playerList.Items.Clear();
 
 			//Start a new thread
-			packetSnifferThread = new PacketSnifferThread(this, livePacketDevice);
+			packetCaptureThread = new PacketCaptureThread(captureDevice, this);
 		}
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
-			//Start sniffing again
+			//Restart capturing again
             if (e.KeyData == Keys.F5)
-				StartSniffing();
+				StartCapture();
         }
 
 		private void Form1_FormClosing(object sender, FormClosingEventArgs e)
 		{
-			//End the packet sniffer thread
-			if (packetSnifferThread != null)
-				packetSnifferThread.End();
+			//End the packet capture thread
+			if (packetCaptureThread != null)
+				packetCaptureThread.StopCapture();
 		}
 
 		private void playerListContextStrip_Opening(object sender, CancelEventArgs e)
@@ -105,9 +103,13 @@ namespace ACMW2Tool
 
 		private void copyNameToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Add support for multiple selections
-			if (playerList.SelectedItems.Count > 0)
-				Clipboard.SetText(((ListViewPlayerItem)playerList.SelectedItems[0]).PlayerName);
+			List<String> playerNames = new List<String>();
+			
+			foreach(ListViewPlayerItem playerItem in playerList.SelectedItems)
+				playerNames.Add(playerItem.PlayerName);
+
+			if(playerNames.Count>0)
+				Clipboard.SetText(String.Join(", ", playerNames.ToArray()));
 		}
     }
 
@@ -138,7 +140,7 @@ namespace ACMW2Tool
 				if (PartystatePlayer == null)
 					return "Unknown";
 
-				return PartystatePlayer.strippedPlayerName + "(" + PartystatePlayer.playerName + ")";
+				return PartystatePlayer.strippedPlayerName;
 			}
 		}
 
@@ -168,7 +170,7 @@ namespace ACMW2Tool
 
         public DateTime PlayerLastTime { get; set; }
 
-        public ListViewPlayerItem(LookupService lookupService, IpV4Address ip)
+        public ListViewPlayerItem(LookupService lookupService, IPAddress ip)
             : base(ip.ToString())
         {
 			this.lookupService = lookupService;
