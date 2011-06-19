@@ -21,8 +21,6 @@ using PcapDotNet.Packets;
 using PcapDotNet.Packets.IpV4;
 using PcapDotNet.Packets.Transport;
 
-using GameWatch.Utils.Net;
-
 using ACMW2Tool.MW2Stuff;
 
 namespace ACMW2Tool
@@ -144,20 +142,12 @@ namespace ACMW2Tool
 			}
 		}
 
-		private IPToCountry ip2Country;
+		private LookupService lookupService;
         public String PlayerCountry
 		{
 			get
 			{
-				//Fact: This IP2C class got gold in 1964 Failure Olympics.
-				try
-				{
-					return Countries.Instance.ISOToCountryName[ip2Country.GetCountry(PlayerIP)].ToString();
-				}
-				catch (Exception e)
-				{
-					return e.Message;
-				}
+				return lookupService.getCountry(PlayerIP).getName();
 			}
 		}
 
@@ -178,10 +168,10 @@ namespace ACMW2Tool
 
         public DateTime PlayerLastTime { get; set; }
 
-        public ListViewPlayerItem(IPToCountry ip2Country, IpV4Address ip)
+        public ListViewPlayerItem(LookupService lookupService, IpV4Address ip)
             : base(ip.ToString())
         {
-			this.ip2Country = ip2Country;
+			this.lookupService = lookupService;
 
             Name = ip.ToString();
 			PlayerIP = ip.ToString();

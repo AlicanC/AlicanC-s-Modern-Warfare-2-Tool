@@ -13,8 +13,6 @@ using PcapDotNet.Packets;
 using PcapDotNet.Packets.IpV4;
 using PcapDotNet.Packets.Transport;
 
-using GameWatch.Utils.Net;
-
 using ACMW2Tool.MW2Stuff;
 
 namespace ACMW2Tool
@@ -27,7 +25,7 @@ namespace ACMW2Tool
 		private ToolUI toolUI;
 		private Dictionary<IPAddress, MW2PartystatePlayer> partystatePlayers = new Dictionary<IPAddress, MW2PartystatePlayer>();
 
-		private IPToCountry ip2Country = new IPToCountry();
+		private LookupService lookupService = new LookupService(Program.geoIPDatabasePath, LookupService.GEOIP_MEMORY_CACHE);
 
 		public PacketSnifferThread(ToolUI toolUI, LivePacketDevice livePacketDevice)
 		{
@@ -49,12 +47,6 @@ namespace ACMW2Tool
 
 		private void PacketThreadStart()
 		{
-			//Load IP2Country
-			ip2Country.Load(@"IP2Country\Databases\delegated-apnic-latest.txt");
-			ip2Country.Load(@"IP2Country\Databases\delegated-arin-latest.txt");
-			ip2Country.Load(@"IP2Country\Databases\delegated-lacnic-latest.txt");
-			ip2Country.Load(@"IP2Country\Databases\delegated-ripencc-latest.txt");
-
 			//Open the communicatior
 			packetCommunicator = livePacketDevice.Open();
 
@@ -117,13 +109,13 @@ namespace ACMW2Tool
 				if (playerItems.ContainsKey(ipDatagram.Source.ToString()))
 					((ListViewPlayerItem)playerItems[ipDatagram.Source.ToString()]).PlayerLastTime = DateTime.Now;
 				else
-					playerItems.Add(new ListViewPlayerItem(ip2Country, ipDatagram.Source));
+					playerItems.Add(new ListViewPlayerItem(lookupService, ipDatagram.Source));
 
 				//Update the destination
 				if (playerItems.ContainsKey(ipDatagram.Destination.ToString()))
 					((ListViewPlayerItem)playerItems[ipDatagram.Destination.ToString()]).PlayerLastTime = DateTime.Now;
 				else
-					playerItems.Add(new ListViewPlayerItem(ip2Country, ipDatagram.Destination));
+					playerItems.Add(new ListViewPlayerItem(lookupService, ipDatagram.Destination));
 
 				//Update entries
 				foreach (ListViewPlayerItem playerItem in playerItems)

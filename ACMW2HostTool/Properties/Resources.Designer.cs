@@ -60,6 +60,13 @@ namespace ACMW2Tool.Properties {
             }
         }
         
+        internal static byte[] GeoIP {
+            get {
+                object obj = ResourceManager.GetObject("GeoIP", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
         internal static System.Drawing.Icon iw4sp_1 {
             get {
                 object obj = ResourceManager.GetObject("iw4sp_1", resourceCulture);
