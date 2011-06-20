@@ -22,8 +22,6 @@ namespace ACMW2Tool
 				File.WriteAllBytes(Settings.Default.GeoIPDatabasePath, Properties.Resources.GeoIP);
 			}
 
-			Form.CheckForIllegalCrossThreadCalls = false;
-
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
 			Application.Run(new ToolUI());

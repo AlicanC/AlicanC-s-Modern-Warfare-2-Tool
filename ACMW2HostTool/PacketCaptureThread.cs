@@ -103,39 +103,41 @@ namespace ACMW2Tool
 
 			//Close the reader and the stream
 			binaryReader.Close();
-			
-			//Lock the UI
-			lock (toolUI)
+
+			toolUI.playerList.BeginInvoke(new UpdatePlayerListDelegate(UpdatePlayerList), new Object[] { ipv4Packet.SourceAddress, ipv4Packet.DestinationAddress });
+		}
+
+		public delegate void UpdatePlayerListDelegate(IPAddress sourceIP, IPAddress destinationIP);
+		private void UpdatePlayerList(IPAddress sourceIP, IPAddress destinationIP)
+		{
+			ListView.ListViewItemCollection playerItems = toolUI.playerList.Items;
+
+			//Update the source
+			if (playerItems.ContainsKey(sourceIP.ToString()))
+				((ListViewPlayerItem)playerItems[sourceIP.ToString()]).PlayerLastTime = DateTime.Now;
+			else
+				playerItems.Add(new ListViewPlayerItem(lookupService, sourceIP));
+
+			//Update the destination
+			if (playerItems.ContainsKey(destinationIP.ToString()))
+				((ListViewPlayerItem)playerItems[destinationIP.ToString()]).PlayerLastTime = DateTime.Now;
+			else
+				playerItems.Add(new ListViewPlayerItem(lookupService, destinationIP));
+
+			//Update entries
+			foreach (ListViewPlayerItem playerItem in playerItems)
 			{
-				ListView.ListViewItemCollection playerItems = toolUI.playerList.Items;
-
-				//Update the source
-				if (playerItems.ContainsKey(ipv4Packet.SourceAddress.ToString()))
-					((ListViewPlayerItem)playerItems[ipv4Packet.SourceAddress.ToString()]).PlayerLastTime = DateTime.Now;
-				else
-					playerItems.Add(new ListViewPlayerItem(lookupService, ipv4Packet.SourceAddress));
-
-				//Update the destination
-				if (playerItems.ContainsKey(ipv4Packet.DestinationAddress.ToString()))
-					((ListViewPlayerItem)playerItems[ipv4Packet.DestinationAddress.ToString()]).PlayerLastTime = DateTime.Now;
-				else
-					playerItems.Add(new ListViewPlayerItem(lookupService, ipv4Packet.DestinationAddress));
-
-				//Update entries
-				foreach (ListViewPlayerItem playerItem in playerItems)
+				//Remove the entry if it wasn't updated for a long time
+				if (TimeSpan.FromTicks(DateTime.Now.Ticks - playerItem.PlayerLastTime.Ticks).Seconds > 15)
 				{
-					//Remove the entry if it wasn't updated for a long time
-					if (TimeSpan.FromTicks(DateTime.Now.Ticks - playerItem.PlayerLastTime.Ticks).Seconds > 15)
-					{
-						playerItem.Remove();
-						continue;
-					}
-
-
-					if (partystatePlayers.ContainsKey(IPAddress.Parse(playerItem.PlayerIP)) && playerItem.PartystatePlayer == null)
-						playerItem.PartystatePlayer = partystatePlayers[IPAddress.Parse(playerItem.PlayerIP)];
-
+					playerItem.Remove();
+					continue;
 				}
+
+
+				if (partystatePlayers.ContainsKey(IPAddress.Parse(playerItem.PlayerIP)) && playerItem.PartystatePlayer == null)
+					playerItem.PartystatePlayer = partystatePlayers[IPAddress.Parse(playerItem.PlayerIP)];
+
 			}
 		}
 	}
