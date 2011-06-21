@@ -3,7 +3,7 @@ AlicanC's Modern Warfare 2 Tool
 
 ACMW2Tool is a tool for Call of Duty: Modern Warfare 2 (AKA CoD6, MW2) which shows players your computer is interacting with and provides information about them.
 
-<b>This is NOT a hack.</b> The tool has nothing to do with the game executable or it's memory, it will only look for packets your networking device sends and receives trough port 28960.
+<b>This application is NOT a hack.</b> The tool has nothing to do with the game executable or it's memory, it will only look for packets your networking device sends and receives trough port 28960.
 
 Requirements
 ------------
