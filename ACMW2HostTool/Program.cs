@@ -17,10 +17,7 @@ namespace ACMW2Tool
         {
 			//Create a temporary GeoIP file from resource if it doesn't exist
 			if (!File.Exists(Settings.Default.GeoIPDatabasePath))
-			{
-				Settings.Default.GeoIPDatabasePath = Path.GetTempFileName();
-				File.WriteAllBytes(Settings.Default.GeoIPDatabasePath, Properties.Resources.GeoIP);
-			}
+				File.WriteAllBytes(Settings.Default.GeoIPDatabasePath = Path.GetTempFileName(), Properties.Resources.GeoIP);
 
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
