@@ -5,5 +5,8 @@
     <Setting Name="GeoIPDatabasePath" Type="System.String" Scope="User">
       <Value Profile="(Default)">GeoIP.dat</Value>
     </Setting>
+    <Setting Name="CaptureDevice" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
   </Settings>
 </SettingsFile>

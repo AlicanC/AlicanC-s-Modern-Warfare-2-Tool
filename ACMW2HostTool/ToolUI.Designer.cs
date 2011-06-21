@@ -47,6 +47,10 @@
 			// 
 			// playerList
 			// 
+			this.playerList.AllowColumnReorder = true;
+			this.playerList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+						| System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
 			this.playerList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnIP,
             this.columnName,
@@ -102,6 +106,8 @@
 			// 
 			// deviceList
 			// 
+			this.deviceList.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
 			this.deviceList.DisplayMember = "Description";
 			this.deviceList.FormattingEnabled = true;
 			this.deviceList.Location = new System.Drawing.Point(12, 27);
@@ -116,6 +122,7 @@
             this.applicationToolStripMenuItem});
 			this.menuStrip1.Location = new System.Drawing.Point(0, 0);
 			this.menuStrip1.Name = "menuStrip1";
+			this.menuStrip1.RightToLeft = System.Windows.Forms.RightToLeft.No;
 			this.menuStrip1.Size = new System.Drawing.Size(584, 24);
 			this.menuStrip1.TabIndex = 3;
 			this.menuStrip1.Text = "menuStrip1";

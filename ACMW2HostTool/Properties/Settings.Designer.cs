@@ -34,5 +34,17 @@ namespace ACMW2Tool.Properties {
                 this["GeoIPDatabasePath"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string CaptureDevice {
+            get {
+                return ((string)(this["CaptureDevice"]));
+            }
+            set {
+                this["CaptureDevice"] = value;
+            }
+        }
     }
 }

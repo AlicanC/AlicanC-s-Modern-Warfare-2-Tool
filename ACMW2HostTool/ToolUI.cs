@@ -18,6 +18,7 @@ using System.Reflection;
 
 using SharpPcap;
 
+using ACMW2Tool.Properties;
 using ACMW2Tool.MW2Stuff;
 
 namespace ACMW2Tool
@@ -44,10 +45,16 @@ namespace ACMW2Tool
 
 				//Add devices to the list
 				foreach (ICaptureDevice captureDevice in captureDevices)
-					deviceList.Items.Add(captureDevice);
+				{
+					Int32 index= deviceList.Items.Add(captureDevice);
 
-				//Select the first device
-				if (deviceList.Items.Count > 0)
+					if (captureDevice.Description == Settings.Default.CaptureDevice)
+						deviceList.SelectedIndex = index;
+
+				}
+
+				//Select the first device if nothing is selected
+				if (deviceList.SelectedIndex==-1 && deviceList.Items.Count > 0)
 					deviceList.SelectedIndex = 0;
 			}
 			catch (InvalidOperationException exception)
@@ -60,6 +67,10 @@ namespace ACMW2Tool
         {
 			//Get the selected device
 			captureDevice = (ICaptureDevice)deviceList.SelectedItem;
+
+			//Save the device description
+			Settings.Default.CaptureDevice = captureDevice.Description;
+			Settings.Default.Save();
 
 			//Start capturing
 			StartCapture();
