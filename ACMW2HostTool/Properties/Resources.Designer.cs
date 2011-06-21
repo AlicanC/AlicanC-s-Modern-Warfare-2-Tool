@@ -60,6 +60,13 @@ namespace ACMW2Tool.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap AboutBoxImage {
+            get {
+                object obj = ResourceManager.GetObject("AboutBoxImage", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static byte[] GeoIP {
             get {
                 object obj = ResourceManager.GetObject("GeoIP", resourceCulture);

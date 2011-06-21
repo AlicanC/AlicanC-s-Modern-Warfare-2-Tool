@@ -78,10 +78,17 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AboutBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AboutBox.Designer.cs">
+      <DependentUpon>AboutBox.cs</DependentUpon>
+    </Compile>
     <Compile Include="PacketCaptureThread.cs" />
     <Compile Include="GeoIP C# API 1.12\Country.cs" />
     <Compile Include="GeoIP C# API 1.12\DatabaseInfo.cs" />
@@ -98,6 +105,9 @@
     <Compile Include="MW2Stuff.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="AboutBox.resx">
+      <DependentUpon>AboutBox.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ToolUI.resx">
       <DependentUpon>ToolUI.cs</DependentUpon>
     </EmbeddedResource>
@@ -123,6 +133,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Resources\AboutBoxImage.png" />
     <Content Include="Resources\GeoIP.dat" />
     <None Include="Resources\iw4sp_1.ico" />
   </ItemGroup>

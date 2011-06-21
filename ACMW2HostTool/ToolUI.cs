@@ -111,6 +111,17 @@ namespace ACMW2Tool
 			if(playerNames.Count>0)
 				Clipboard.SetText(String.Join(", ", playerNames.ToArray()));
 		}
+
+		private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			Close();
+		}
+
+		private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			AboutBox aboutBox = new AboutBox();
+			aboutBox.ShowDialog();
+		}
     }
 
     class ListViewPlayerItem : ListViewItem

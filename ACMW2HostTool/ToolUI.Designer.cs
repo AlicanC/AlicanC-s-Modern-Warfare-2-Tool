@@ -37,7 +37,12 @@
 			this.playerListContextStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.copyNameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.deviceList = new System.Windows.Forms.ComboBox();
+			this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+			this.applicationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.playerListContextStrip.SuspendLayout();
+			this.menuStrip1.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// playerList
@@ -50,9 +55,9 @@
 			this.playerList.ContextMenuStrip = this.playerListContextStrip;
 			this.playerList.FullRowSelect = true;
 			this.playerList.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-			this.playerList.Location = new System.Drawing.Point(12, 39);
+			this.playerList.Location = new System.Drawing.Point(12, 54);
 			this.playerList.Name = "playerList";
-			this.playerList.Size = new System.Drawing.Size(560, 411);
+			this.playerList.Size = new System.Drawing.Size(560, 396);
 			this.playerList.TabIndex = 1;
 			this.playerList.UseCompatibleStateImageBehavior = false;
 			this.playerList.View = System.Windows.Forms.View.Details;
@@ -85,13 +90,13 @@
 			this.playerListContextStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.copyNameToolStripMenuItem});
 			this.playerListContextStrip.Name = "playerListContextStrip";
-			this.playerListContextStrip.Size = new System.Drawing.Size(153, 48);
+			this.playerListContextStrip.Size = new System.Drawing.Size(138, 26);
 			this.playerListContextStrip.Opening += new System.ComponentModel.CancelEventHandler(this.playerListContextStrip_Opening);
 			// 
 			// copyNameToolStripMenuItem
 			// 
 			this.copyNameToolStripMenuItem.Name = "copyNameToolStripMenuItem";
-			this.copyNameToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.copyNameToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
 			this.copyNameToolStripMenuItem.Text = "Copy Name";
 			this.copyNameToolStripMenuItem.Click += new System.EventHandler(this.copyNameToolStripMenuItem_Click);
 			// 
@@ -99,26 +104,64 @@
 			// 
 			this.deviceList.DisplayMember = "Description";
 			this.deviceList.FormattingEnabled = true;
-			this.deviceList.Location = new System.Drawing.Point(12, 12);
+			this.deviceList.Location = new System.Drawing.Point(12, 27);
 			this.deviceList.Name = "deviceList";
 			this.deviceList.Size = new System.Drawing.Size(560, 21);
 			this.deviceList.TabIndex = 2;
 			this.deviceList.SelectedIndexChanged += new System.EventHandler(this.deviceList_SelectedIndexChanged);
+			// 
+			// menuStrip1
+			// 
+			this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.applicationToolStripMenuItem});
+			this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+			this.menuStrip1.Name = "menuStrip1";
+			this.menuStrip1.Size = new System.Drawing.Size(584, 24);
+			this.menuStrip1.TabIndex = 3;
+			this.menuStrip1.Text = "menuStrip1";
+			// 
+			// applicationToolStripMenuItem
+			// 
+			this.applicationToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.aboutToolStripMenuItem,
+            this.exitToolStripMenuItem});
+			this.applicationToolStripMenuItem.Name = "applicationToolStripMenuItem";
+			this.applicationToolStripMenuItem.Size = new System.Drawing.Size(80, 20);
+			this.applicationToolStripMenuItem.Text = "Application";
+			// 
+			// aboutToolStripMenuItem
+			// 
+			this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
+			this.aboutToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+			this.aboutToolStripMenuItem.Text = "About";
+			this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
+			// 
+			// exitToolStripMenuItem
+			// 
+			this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+			this.exitToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+			this.exitToolStripMenuItem.Text = "Exit";
+			this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
 			// 
 			// ToolUI
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(584, 462);
+			this.Controls.Add(this.menuStrip1);
 			this.Controls.Add(this.playerList);
 			this.Controls.Add(this.deviceList);
 			this.KeyPreview = true;
+			this.MainMenuStrip = this.menuStrip1;
 			this.Name = "ToolUI";
 			this.Text = "AlicanC\'s Modern Warfare 2 Tool";
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
 			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
 			this.playerListContextStrip.ResumeLayout(false);
+			this.menuStrip1.ResumeLayout(false);
+			this.menuStrip1.PerformLayout();
 			this.ResumeLayout(false);
+			this.PerformLayout();
 
         }
 
@@ -132,6 +175,10 @@
 		private System.Windows.Forms.ColumnHeader columnName;
 		public System.Windows.Forms.ListView playerList;
 		private System.Windows.Forms.ToolStripMenuItem copyNameToolStripMenuItem;
+		private System.Windows.Forms.MenuStrip menuStrip1;
+		private System.Windows.Forms.ToolStripMenuItem applicationToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
     }
 }
 

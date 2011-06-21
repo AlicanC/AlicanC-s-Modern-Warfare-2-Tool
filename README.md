@@ -5,6 +5,15 @@ ACMW2Tool is a tool for Call of Duty: Modern Warfare 2 (AKA CoD6, MW2) which sho
 
 <b>This is NOT a hack.</b> The tool has nothing to do with the game executable or it's memory, it will only look for packets your networking device sends and receives trough port 28960.
 
+Credits
+-------
+
+Big thanks to Da_FileServer for 0partystate package analysis.
+
+IP to country conversion provided by GeoIP by MaxMind.
+
+Packet capturing is done with SharpPcap by Chris Morgan and Tamir Gal.
+
 Requirements
 ------------
 
