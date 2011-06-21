@@ -16,5 +16,5 @@ Don't hesitate to contact if you are having any problems with compilation.
 
 ### For Execution
 
-[WinPcap](http://www.winpcap.org/)
-[Microsoft .Net Framework 4](http://www.microsoft.com/download/en/details.aspx?displaylang=en&id=17718) or Microsoft .Net Framework 4 Client Profile.
+* [WinPcap](http://www.winpcap.org/)
+* [Microsoft .Net Framework 4](http://www.microsoft.com/download/en/details.aspx?displaylang=en&id=17718) or Microsoft .Net Framework 4 Client Profile.
