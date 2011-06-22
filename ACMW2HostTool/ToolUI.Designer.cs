@@ -39,10 +39,11 @@
 			this.deviceList = new System.Windows.Forms.ComboBox();
 			this.menuStrip1 = new System.Windows.Forms.MenuStrip();
 			this.applicationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.restartCaptureToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+			this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripComboBox1 = new System.Windows.Forms.ToolStripComboBox();
 			this.playerListContextStrip.SuspendLayout();
 			this.menuStrip1.SuspendLayout();
 			this.SuspendLayout();
@@ -121,13 +122,14 @@
 			// menuStrip1
 			// 
 			this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.applicationToolStripMenuItem});
+            this.applicationToolStripMenuItem,
+            this.toolStripComboBox1});
 			this.menuStrip1.Location = new System.Drawing.Point(0, 0);
 			this.menuStrip1.Name = "menuStrip1";
 			this.menuStrip1.RightToLeft = System.Windows.Forms.RightToLeft.No;
-			this.menuStrip1.Size = new System.Drawing.Size(584, 24);
+			this.menuStrip1.Size = new System.Drawing.Size(584, 27);
 			this.menuStrip1.TabIndex = 3;
-			this.menuStrip1.Text = "menuStrip1";
+			this.menuStrip1.Text = "menuStrip";
 			// 
 			// applicationToolStripMenuItem
 			// 
@@ -137,8 +139,21 @@
             this.aboutToolStripMenuItem,
             this.exitToolStripMenuItem});
 			this.applicationToolStripMenuItem.Name = "applicationToolStripMenuItem";
-			this.applicationToolStripMenuItem.Size = new System.Drawing.Size(80, 20);
+			this.applicationToolStripMenuItem.Size = new System.Drawing.Size(80, 23);
 			this.applicationToolStripMenuItem.Text = "Application";
+			// 
+			// restartCaptureToolStripMenuItem
+			// 
+			this.restartCaptureToolStripMenuItem.Name = "restartCaptureToolStripMenuItem";
+			this.restartCaptureToolStripMenuItem.ShortcutKeyDisplayString = "F5";
+			this.restartCaptureToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
+			this.restartCaptureToolStripMenuItem.Text = "Restart Capture";
+			this.restartCaptureToolStripMenuItem.Click += new System.EventHandler(this.restartCaptureToolStripMenuItem_Click);
+			// 
+			// toolStripSeparator1
+			// 
+			this.toolStripSeparator1.Name = "toolStripSeparator1";
+			this.toolStripSeparator1.Size = new System.Drawing.Size(171, 6);
 			// 
 			// aboutToolStripMenuItem
 			// 
@@ -155,18 +170,10 @@
 			this.exitToolStripMenuItem.Text = "Exit";
 			this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
 			// 
-			// restartCaptureToolStripMenuItem
+			// toolStripComboBox1
 			// 
-			this.restartCaptureToolStripMenuItem.Name = "restartCaptureToolStripMenuItem";
-			this.restartCaptureToolStripMenuItem.ShortcutKeyDisplayString = "F5";
-			this.restartCaptureToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
-			this.restartCaptureToolStripMenuItem.Text = "Restart Capture";
-			this.restartCaptureToolStripMenuItem.Click += new System.EventHandler(this.restartCaptureToolStripMenuItem_Click);
-			// 
-			// toolStripSeparator1
-			// 
-			this.toolStripSeparator1.Name = "toolStripSeparator1";
-			this.toolStripSeparator1.Size = new System.Drawing.Size(171, 6);
+			this.toolStripComboBox1.Name = "toolStripComboBox1";
+			this.toolStripComboBox1.Size = new System.Drawing.Size(121, 23);
 			// 
 			// ToolUI
 			// 
@@ -206,6 +213,7 @@
 		private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem restartCaptureToolStripMenuItem;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+		private System.Windows.Forms.ToolStripComboBox toolStripComboBox1;
     }
 }
 

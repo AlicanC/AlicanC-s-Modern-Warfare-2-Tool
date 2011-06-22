@@ -19,7 +19,7 @@ using System.Reflection;
 using SharpPcap;
 
 using ACMW2Tool.Properties;
-using ACMW2Tool.MW2Stuff;
+using ACMW2Tool.MW2Packets;
 
 namespace ACMW2Tool
 {
@@ -97,6 +97,8 @@ namespace ACMW2Tool
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
+			MessageBox.Show("This");
+
 			//Restart capture
             if (e.KeyData == Keys.F5)
 				StartCapture();

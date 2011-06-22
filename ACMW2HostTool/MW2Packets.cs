@@ -8,7 +8,7 @@ using System.IO;
 using System.Net;
 using System.Text.RegularExpressions;
 
-namespace ACMW2Tool.MW2Stuff
+namespace ACMW2Tool.MW2Packets
 {
 	public enum Endianness
 	{
@@ -18,6 +18,7 @@ namespace ACMW2Tool.MW2Stuff
 
 	public static class BinaryReaderExtension
 	{
+		/*
 		public static void Read(this BinaryReader binaryReader, ref Object refObject)
 		{
 			Type objectType = refObject.GetType();
@@ -26,6 +27,7 @@ namespace ACMW2Tool.MW2Stuff
 			refObject = Marshal.PtrToStructure(handle.AddrOfPinnedObject(), objectType);
 			handle.Free();
 		}
+		*/
 
 		public static byte[] ReadBytes(this BinaryReader binaryReader, int count, Endianness endianness)
 		{

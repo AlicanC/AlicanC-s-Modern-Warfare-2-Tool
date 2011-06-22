@@ -12,16 +12,16 @@ using SharpPcap;
 using PacketDotNet;
 
 using ACMW2Tool.Properties;
-using ACMW2Tool.MW2Stuff;
+using ACMW2Tool.MW2Packets;
 
 namespace ACMW2Tool
 {
 	class PacketCaptureThread
 	{
 		private ICaptureDevice captureDevice;
-		private Thread packetCaptureThread;
 		private ToolUI toolUI;
 		private Dictionary<IPAddress, MW2PartystatePlayer> partystatePlayers = new Dictionary<IPAddress, MW2PartystatePlayer>();
+		private Thread packetCaptureThread;
 
 		private LookupService lookupService = new LookupService(Settings.Default.GeoIPDatabasePath, LookupService.GEOIP_MEMORY_CACHE);
 
@@ -33,6 +33,9 @@ namespace ACMW2Tool
 
 			//Start the thread
 			packetCaptureThread = new Thread(PacketCaptureThreadStart);
+#if DEBUG
+			packetCaptureThread.Name = "Packet Capture Thread";
+#endif
 			packetCaptureThread.Start();
 		}
 
@@ -65,46 +68,46 @@ namespace ACMW2Tool
 		{
 			IPv4Packet ipv4Packet = (IPv4Packet)Packet.ParsePacket(LinkLayers.Ethernet, captureEventArgs.Packet.Data).PayloadPacket;
 
-			MemoryStream memoryStream = new MemoryStream(ipv4Packet.Bytes);
-
-			BinaryReader binaryReader = new BinaryReader(memoryStream);
-
-			//Read the packet header
-			MW2PacketHeader packetHeader = new MW2PacketHeader(binaryReader);
-
-			//The rest is not fully functional so we will be logging any exceptions
-			try
+			using (BinaryReader binaryReader = new BinaryReader(new MemoryStream(ipv4Packet.Bytes)))
 			{
-				//Read the party state header
-				if (packetHeader.packetType == "0partystate")
+				//Read the packet header
+				MW2PacketHeader packetHeader = new MW2PacketHeader(binaryReader);
+
+				//The rest is not fully functional so we will be logging any exceptions
+				try
 				{
-					MW2PartystateHeader partystateHeader = new MW2PartystateHeader(binaryReader);
-
-					//Read player entries
-					while (binaryReader.BaseStream.Length > binaryReader.BaseStream.Position)
+					//Read the party state header
+					if (packetHeader.packetType == "0partystate")
 					{
-						MW2PartystatePlayer partyStatePlayer = new MW2PartystatePlayer(binaryReader);
+						/* DEBUG */System.Diagnostics.Debug.WriteLine("0partystate from {0}", ipv4Packet.SourceAddress);
 
-						partystatePlayers[partyStatePlayer.externalIP] = partyStatePlayer;
+						MW2PartystateHeader partystateHeader = new MW2PartystateHeader(binaryReader);
+
+						//Read player entries
+						while (binaryReader.BaseStream.Length > binaryReader.BaseStream.Position)
+						{
+							MW2PartystatePlayer partyStatePlayer = new MW2PartystatePlayer(binaryReader);
+
+							partystatePlayers[partyStatePlayer.externalIP] = partyStatePlayer;
+						}
 					}
 				}
+				catch (Exception e)
+				{
+					//Create the directory if it doesn't exist
+					if (!Directory.Exists("FailedPackets"))
+						Directory.CreateDirectory("FailedPackets");
+
+					//Create files
+					String filePath = @"FailedPackets\0partystate-" + DateTime.Now.Ticks;
+					//File.WriteAllBytes(filePath + ".bytes", packet.Ethernet.Payload.ToArray());
+					File.WriteAllLines(filePath + ".txt", new String[] { e.Message, e.StackTrace });
+				}
 			}
-			catch (Exception e)
-			{
-				//Create the directory if it doesn't exist
-				if (!Directory.Exists(@"FailedPackets"))
-					Directory.CreateDirectory("FailedPackets");
 
-				//Create files
-				String filePath = @"FailedPackets\0partystate-" + DateTime.Now.Ticks;
-				//File.WriteAllBytes(filePath + ".bytes", packet.Ethernet.Payload.ToArray());
-				File.WriteAllLines(filePath + ".txt", new String[] { e.Message, e.StackTrace });
-			}
-
-			//Close the reader and the stream
-			binaryReader.Close();
-
-			toolUI.playerList.BeginInvoke(new UpdatePlayerListDelegate(UpdatePlayerList), new Object[] { ipv4Packet.SourceAddress, ipv4Packet.DestinationAddress });
+			//Invoke the player list to asynchronously update it
+			//toolUI.playerList.BeginInvoke(new UpdatePlayerListDelegate(UpdatePlayerList), new Object[] { ipv4Packet.SourceAddress, ipv4Packet.DestinationAddress });
+			toolUI.playerList.BeginInvoke(new UpdatePlayerListDelegate(UpdatePlayerList), ipv4Packet.SourceAddress, ipv4Packet.DestinationAddress);
 		}
 
 		public delegate void UpdatePlayerListDelegate(IPAddress sourceIP, IPAddress destinationIP);
@@ -113,7 +116,7 @@ namespace ACMW2Tool
 			ListView.ListViewItemCollection playerItems = toolUI.playerList.Items;
 
 			//Update the source
-			if (playerItems.ContainsKey(sourceIP.ToString()))
+			if (!playerItems.ContainsKey(sourceIP.ToString()))
 				((ListViewPlayerItem)playerItems[sourceIP.ToString()]).PlayerLastTime = DateTime.Now;
 			else
 				playerItems.Add(new ListViewPlayerItem(lookupService, sourceIP));
@@ -133,7 +136,6 @@ namespace ACMW2Tool
 					playerItem.Remove();
 					continue;
 				}
-
 
 				if (partystatePlayers.ContainsKey(IPAddress.Parse(playerItem.PlayerIP)) && playerItem.PartystatePlayer == null)
 					playerItem.PartystatePlayer = partystatePlayers[IPAddress.Parse(playerItem.PlayerIP)];

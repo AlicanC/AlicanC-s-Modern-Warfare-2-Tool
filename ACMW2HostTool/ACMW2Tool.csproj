@@ -103,7 +103,7 @@
     <Compile Include="ToolUI.Designer.cs">
       <DependentUpon>ToolUI.cs</DependentUpon>
     </Compile>
-    <Compile Include="MW2Stuff.cs" />
+    <Compile Include="MW2Packets.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="AboutBox.resx">
