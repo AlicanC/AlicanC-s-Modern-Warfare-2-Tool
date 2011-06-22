@@ -41,6 +41,8 @@
 			this.applicationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.restartCaptureToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.playerListContextStrip.SuspendLayout();
 			this.menuStrip1.SuspendLayout();
 			this.SuspendLayout();
@@ -130,6 +132,8 @@
 			// applicationToolStripMenuItem
 			// 
 			this.applicationToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.restartCaptureToolStripMenuItem,
+            this.toolStripSeparator1,
             this.aboutToolStripMenuItem,
             this.exitToolStripMenuItem});
 			this.applicationToolStripMenuItem.Name = "applicationToolStripMenuItem";
@@ -139,16 +143,30 @@
 			// aboutToolStripMenuItem
 			// 
 			this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-			this.aboutToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+			this.aboutToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
 			this.aboutToolStripMenuItem.Text = "About";
 			this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
 			// 
 			// exitToolStripMenuItem
 			// 
 			this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-			this.exitToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+			this.exitToolStripMenuItem.ShortcutKeyDisplayString = "Alt+F4";
+			this.exitToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
 			this.exitToolStripMenuItem.Text = "Exit";
 			this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+			// 
+			// restartCaptureToolStripMenuItem
+			// 
+			this.restartCaptureToolStripMenuItem.Name = "restartCaptureToolStripMenuItem";
+			this.restartCaptureToolStripMenuItem.ShortcutKeyDisplayString = "F5";
+			this.restartCaptureToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
+			this.restartCaptureToolStripMenuItem.Text = "Restart Capture";
+			this.restartCaptureToolStripMenuItem.Click += new System.EventHandler(this.restartCaptureToolStripMenuItem_Click);
+			// 
+			// toolStripSeparator1
+			// 
+			this.toolStripSeparator1.Name = "toolStripSeparator1";
+			this.toolStripSeparator1.Size = new System.Drawing.Size(171, 6);
 			// 
 			// ToolUI
 			// 
@@ -156,8 +174,8 @@
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(584, 462);
 			this.Controls.Add(this.menuStrip1);
-			this.Controls.Add(this.playerList);
 			this.Controls.Add(this.deviceList);
+			this.Controls.Add(this.playerList);
 			this.KeyPreview = true;
 			this.MainMenuStrip = this.menuStrip1;
 			this.Name = "ToolUI";
@@ -186,6 +204,8 @@
 		private System.Windows.Forms.ToolStripMenuItem applicationToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem restartCaptureToolStripMenuItem;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
     }
 }
 

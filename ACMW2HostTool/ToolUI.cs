@@ -89,9 +89,15 @@ namespace ACMW2Tool
 			packetCaptureThread = new PacketCaptureThread(captureDevice, this);
 		}
 
+		private void restartCaptureToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			//Restart capture
+			StartCapture();
+		}
+
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
-			//Restart capturing again
+			//Restart capture
             if (e.KeyData == Keys.F5)
 				StartCapture();
         }

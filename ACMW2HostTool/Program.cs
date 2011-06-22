@@ -12,15 +12,11 @@ namespace ACMW2Tool
 {
     static class Program
     {
-		static public String geoIPDatabasePath;
-
-        [STAThread]
+		[STAThread]
         static void Main()
         {
-			Settings.Default.GeoIPDatabasePath = "GeoIP.dat";
-
 			//Create a temporary GeoIP file from resource if it doesn't exist
-			if (!File.Exists(Settings.Default.GeoIPDatabasePath))
+			if (!File.Exists(Settings.Default.GeoIPDatabasePath = "GeoIP.dat"))
 				File.WriteAllBytes(Settings.Default.GeoIPDatabasePath = Path.GetTempFileName(), Properties.Resources.GeoIP);
 
 			Application.EnableVisualStyles();
