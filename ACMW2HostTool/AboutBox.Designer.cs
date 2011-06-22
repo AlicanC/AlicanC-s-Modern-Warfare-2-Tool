@@ -74,7 +74,6 @@
 			// labelProductName
 			// 
 			this.labelProductName.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.labelProductName.ForeColor = System.Drawing.SystemColors.Control;
 			this.labelProductName.Location = new System.Drawing.Point(158, 0);
 			this.labelProductName.Margin = new System.Windows.Forms.Padding(18, 0, 3, 0);
 			this.labelProductName.MaximumSize = new System.Drawing.Size(0, 17);
@@ -87,7 +86,6 @@
 			// labelVersion
 			// 
 			this.labelVersion.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.labelVersion.ForeColor = System.Drawing.SystemColors.Control;
 			this.labelVersion.Location = new System.Drawing.Point(158, 20);
 			this.labelVersion.Margin = new System.Windows.Forms.Padding(18, 0, 3, 0);
 			this.labelVersion.MaximumSize = new System.Drawing.Size(0, 17);
@@ -99,11 +97,9 @@
 			// 
 			// textBoxCredits
 			// 
-			this.textBoxCredits.BackColor = System.Drawing.Color.Black;
 			this.textBoxCredits.BorderStyle = System.Windows.Forms.BorderStyle.None;
 			this.textBoxCredits.Cursor = System.Windows.Forms.Cursors.Default;
 			this.textBoxCredits.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.textBoxCredits.ForeColor = System.Drawing.SystemColors.Control;
 			this.textBoxCredits.Location = new System.Drawing.Point(146, 63);
 			this.textBoxCredits.Margin = new System.Windows.Forms.Padding(6, 23, 3, 3);
 			this.textBoxCredits.Multiline = true;
@@ -129,7 +125,6 @@
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.BackColor = System.Drawing.Color.Black;
 			this.ClientSize = new System.Drawing.Size(444, 302);
 			this.Controls.Add(this.tableLayoutPanel);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
@@ -140,7 +135,6 @@
 			this.ShowIcon = false;
 			this.ShowInTaskbar = false;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-			this.Text = "AboutBox";
 			this.tableLayoutPanel.ResumeLayout(false);
 			this.tableLayoutPanel.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.logoPictureBox)).EndInit();

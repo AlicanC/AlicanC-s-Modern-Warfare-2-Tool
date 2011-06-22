@@ -96,7 +96,7 @@ namespace ACMW2Tool
 				StartCapture();
         }
 
-		private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+		private void ToolUI_FormClosed(object sender, FormClosedEventArgs e)
 		{
 			//End the packet capture thread
 			if (packetCaptureThread != null)

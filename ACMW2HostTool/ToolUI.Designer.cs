@@ -162,7 +162,7 @@
 			this.MainMenuStrip = this.menuStrip1;
 			this.Name = "ToolUI";
 			this.Text = "AlicanC\'s Modern Warfare 2 Tool";
-			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
+			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.ToolUI_FormClosed);
 			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
 			this.playerListContextStrip.ResumeLayout(false);
 			this.menuStrip1.ResumeLayout(false);
