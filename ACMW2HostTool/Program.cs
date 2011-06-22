@@ -17,11 +17,11 @@ namespace ACMW2Tool
         [STAThread]
         static void Main()
         {
+			Settings.Default.GeoIPDatabasePath = "GeoIP.dat";
+
 			//Create a temporary GeoIP file from resource if it doesn't exist
 			if (!File.Exists(Settings.Default.GeoIPDatabasePath))
-				File.WriteAllBytes(geoIPDatabasePath = Path.GetTempFileName(), Properties.Resources.GeoIP);
-			else
-				geoIPDatabasePath = Settings.Default.GeoIPDatabasePath;
+				File.WriteAllBytes(Settings.Default.GeoIPDatabasePath = Path.GetTempFileName(), Properties.Resources.GeoIP);
 
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
