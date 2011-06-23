@@ -90,6 +90,7 @@
     <Compile Include="AboutBox.Designer.cs">
       <DependentUpon>AboutBox.cs</DependentUpon>
     </Compile>
+    <Compile Include="Extensions.cs" />
     <Compile Include="PacketCaptureThread.cs" />
     <Compile Include="GeoIP C# API 1.12\Country.cs" />
     <Compile Include="GeoIP C# API 1.12\DatabaseInfo.cs" />

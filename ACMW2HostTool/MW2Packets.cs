@@ -7,78 +7,14 @@ using System.IO;
 using System.Net;
 using System.Text.RegularExpressions;
 
+using ACMW2Tool.Extensions;
+
 namespace ACMW2Tool.MW2Packets
 {
-	public enum Endianness
-	{
-		Little,
-		Big
-	}
-
-	public static class BinaryReaderExtension
-	{
-		/*
-		public static void Read(this BinaryReader binaryReader, ref Object refObject)
-		{
-			Type objectType = refObject.GetType();
-
-			GCHandle handle = GCHandle.Alloc(binaryReader.ReadBytes(Marshal.SizeOf(objectType)));
-			refObject = Marshal.PtrToStructure(handle.AddrOfPinnedObject(), objectType);
-			handle.Free();
-		}
-		*/
-
-		public static byte[] ReadBytes(this BinaryReader binaryReader, int count, Endianness endianness)
-		{
-			if (endianness == Endianness.Little)
-				return binaryReader.ReadBytes(count);
-            
-			return binaryReader.ReadBytes(count).Reverse().ToArray();
-		}
-
-		public static UInt16 ReadUInt16(this BinaryReader binaryReader, Endianness endianness)
-		{
-			if (endianness == Endianness.Little)
-				return binaryReader.ReadUInt16();
-
-			return BitConverter.ToUInt16(binaryReader.ReadBytes(2, endianness), 0);
-		}
-
-		public static UInt32 ReadUInt32(this BinaryReader binaryReader, Endianness endianness)
-		{
-			if (endianness == Endianness.Little)
-				return binaryReader.ReadUInt32();
-
-			return BitConverter.ToUInt32(binaryReader.ReadBytes(4, endianness), 0);
-		}
-
-		public static String ReadNullTerminatedString(this BinaryReader binaryReader, Encoding encoding)
-		{
-			List<Byte> byteList = new List<Byte>();
-
-			Byte nextByte = binaryReader.ReadByte();
-
-			while (nextByte != 0)
-			{
-				byteList.Add(nextByte);
-				try
-				{
-					nextByte = binaryReader.ReadByte();
-				}
-				catch
-				{
-					nextByte = 0;
-				}
-			}
-            
-			return encoding.GetString(byteList.ToArray());
-		}
-	}
-
 	public class MW2PacketHeader //Length 256/8=32 + String + \0
 	{
 		//Big endian
-		public UInt16 magic;
+		public UInt16 unknown1;
 		public UInt16 packetSize;				//Includes this header
 		public UInt32 unknown3;
 		public UInt16 unknown4;
@@ -95,9 +31,8 @@ namespace ACMW2Tool.MW2Packets
 		{
 			//Is this really something special to MW2? Can this be a generic header?
 
-			//The package seems to be big endian but this is only an identifier so it doesn't really matter how we read it.
-			if ((magic = binaryReader.ReadUInt16()) != Convert.ToUInt16("2D00", 16))
-				throw new InvalidDataException("First two bytes of the packet header must be 0x2D00.");
+			//?????
+			unknown1 = binaryReader.ReadUInt16(Endianness.Big);
 
 			//Da_Fileserver identified this as the packet size including this header.
 			//The problem is that this value may be different for packets of the same size. This is even 0x0000 in some packets.
