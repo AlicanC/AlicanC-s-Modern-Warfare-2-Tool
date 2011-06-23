@@ -97,8 +97,6 @@ namespace ACMW2Tool
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
-			MessageBox.Show("This");
-
 			//Restart capture
             if (e.KeyData == Keys.F5)
 				StartCapture();
@@ -141,6 +139,14 @@ namespace ACMW2Tool
 			AboutBox aboutBox = new AboutBox();
 			aboutBox.ShowDialog();
 		}
+
+		private void updateTimer_Tick(object sender, EventArgs e)
+		{
+			//Remove entries which weren't updated for some time
+			foreach (ListViewPlayerItem playerItem in playerList.Items)
+				if (TimeSpan.FromTicks(DateTime.Now.Ticks - playerItem.PlayerLastTime.Ticks).Seconds > 15)
+					playerItem.Remove();
+		}
     }
 
     class ListViewPlayerItem : ListViewItem
@@ -154,9 +160,15 @@ namespace ACMW2Tool
 			}
 			set
 			{
+				if (partystatePlayer != null)
+					return;
+
 				partystatePlayer = value;
 				
-				SubItems["PlayerName"].Text = PartystatePlayer.strippedPlayerName;
+				SubItems["PlayerName"].Text = PartystatePlayer.StrippedPlayerName;
+
+				if (PartystatePlayer.IsHost)
+					SubItems["PlayerName"].Text += " (Host)";
 			}
 		}
 
@@ -170,7 +182,7 @@ namespace ACMW2Tool
 				if (PartystatePlayer == null)
 					return "Unknown";
 
-				return PartystatePlayer.strippedPlayerName;
+				return PartystatePlayer.StrippedPlayerName;
 			}
 		}
 

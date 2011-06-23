@@ -29,11 +29,6 @@
         private void InitializeComponent()
         {
 			this.components = new System.ComponentModel.Container();
-			this.playerList = new System.Windows.Forms.ListView();
-			this.columnIP = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnCountry = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHostName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.playerListContextStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.copyNameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.deviceList = new System.Windows.Forms.ComboBox();
@@ -43,54 +38,15 @@
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolStripComboBox1 = new System.Windows.Forms.ToolStripComboBox();
+			this.columnIP = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnCountry = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHostName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.playerList = new System.Windows.Forms.ListView();
+			this.updateTimer = new System.Windows.Forms.Timer(this.components);
 			this.playerListContextStrip.SuspendLayout();
 			this.menuStrip1.SuspendLayout();
 			this.SuspendLayout();
-			// 
-			// playerList
-			// 
-			this.playerList.AllowColumnReorder = true;
-			this.playerList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-						| System.Windows.Forms.AnchorStyles.Left)
-						| System.Windows.Forms.AnchorStyles.Right)));
-			this.playerList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnIP,
-            this.columnName,
-            this.columnCountry,
-            this.columnHostName});
-			this.playerList.ContextMenuStrip = this.playerListContextStrip;
-			this.playerList.FullRowSelect = true;
-			this.playerList.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-			this.playerList.Location = new System.Drawing.Point(12, 54);
-			this.playerList.Name = "playerList";
-			this.playerList.Size = new System.Drawing.Size(560, 396);
-			this.playerList.TabIndex = 1;
-			this.playerList.UseCompatibleStateImageBehavior = false;
-			this.playerList.View = System.Windows.Forms.View.Details;
-			// 
-			// columnIP
-			// 
-			this.columnIP.DisplayIndex = 2;
-			this.columnIP.Text = "Player IP";
-			this.columnIP.Width = 120;
-			// 
-			// columnName
-			// 
-			this.columnName.DisplayIndex = 0;
-			this.columnName.Text = "Name";
-			this.columnName.Width = 100;
-			// 
-			// columnCountry
-			// 
-			this.columnCountry.DisplayIndex = 1;
-			this.columnCountry.Text = "Country";
-			this.columnCountry.Width = 120;
-			// 
-			// columnHostName
-			// 
-			this.columnHostName.Text = "Host Name";
-			this.columnHostName.Width = 210;
 			// 
 			// playerListContextStrip
 			// 
@@ -122,12 +78,11 @@
 			// menuStrip1
 			// 
 			this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.applicationToolStripMenuItem,
-            this.toolStripComboBox1});
+            this.applicationToolStripMenuItem});
 			this.menuStrip1.Location = new System.Drawing.Point(0, 0);
 			this.menuStrip1.Name = "menuStrip1";
 			this.menuStrip1.RightToLeft = System.Windows.Forms.RightToLeft.No;
-			this.menuStrip1.Size = new System.Drawing.Size(584, 27);
+			this.menuStrip1.Size = new System.Drawing.Size(584, 24);
 			this.menuStrip1.TabIndex = 3;
 			this.menuStrip1.Text = "menuStrip";
 			// 
@@ -139,7 +94,7 @@
             this.aboutToolStripMenuItem,
             this.exitToolStripMenuItem});
 			this.applicationToolStripMenuItem.Name = "applicationToolStripMenuItem";
-			this.applicationToolStripMenuItem.Size = new System.Drawing.Size(80, 23);
+			this.applicationToolStripMenuItem.Size = new System.Drawing.Size(80, 20);
 			this.applicationToolStripMenuItem.Text = "Application";
 			// 
 			// restartCaptureToolStripMenuItem
@@ -170,10 +125,54 @@
 			this.exitToolStripMenuItem.Text = "Exit";
 			this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
 			// 
-			// toolStripComboBox1
+			// columnIP
 			// 
-			this.toolStripComboBox1.Name = "toolStripComboBox1";
-			this.toolStripComboBox1.Size = new System.Drawing.Size(121, 23);
+			this.columnIP.DisplayIndex = 2;
+			this.columnIP.Text = "Player IP";
+			this.columnIP.Width = 120;
+			// 
+			// columnName
+			// 
+			this.columnName.DisplayIndex = 0;
+			this.columnName.Text = "Name";
+			this.columnName.Width = 100;
+			// 
+			// columnCountry
+			// 
+			this.columnCountry.DisplayIndex = 1;
+			this.columnCountry.Text = "Country";
+			this.columnCountry.Width = 120;
+			// 
+			// columnHostName
+			// 
+			this.columnHostName.Text = "Host Name";
+			this.columnHostName.Width = 210;
+			// 
+			// playerList
+			// 
+			this.playerList.AllowColumnReorder = true;
+			this.playerList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+						| System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
+			this.playerList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnIP,
+            this.columnName,
+            this.columnCountry,
+            this.columnHostName});
+			this.playerList.ContextMenuStrip = this.playerListContextStrip;
+			this.playerList.FullRowSelect = true;
+			this.playerList.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+			this.playerList.Location = new System.Drawing.Point(12, 54);
+			this.playerList.Name = "playerList";
+			this.playerList.Size = new System.Drawing.Size(560, 396);
+			this.playerList.TabIndex = 1;
+			this.playerList.UseCompatibleStateImageBehavior = false;
+			this.playerList.View = System.Windows.Forms.View.Details;
+			// 
+			// updateTimer
+			// 
+			this.updateTimer.Enabled = true;
+			this.updateTimer.Tick += new System.EventHandler(this.updateTimer_Tick);
 			// 
 			// ToolUI
 			// 
@@ -199,13 +198,8 @@
 
         #endregion
 
-		private System.Windows.Forms.ColumnHeader columnIP;
-        private System.Windows.Forms.ColumnHeader columnCountry;
-        private System.Windows.Forms.ComboBox deviceList;
-        private System.Windows.Forms.ColumnHeader columnHostName;
+		private System.Windows.Forms.ComboBox deviceList;
 		private System.Windows.Forms.ContextMenuStrip playerListContextStrip;
-		private System.Windows.Forms.ColumnHeader columnName;
-		public System.Windows.Forms.ListView playerList;
 		private System.Windows.Forms.ToolStripMenuItem copyNameToolStripMenuItem;
 		private System.Windows.Forms.MenuStrip menuStrip1;
 		private System.Windows.Forms.ToolStripMenuItem applicationToolStripMenuItem;
@@ -213,7 +207,12 @@
 		private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem restartCaptureToolStripMenuItem;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-		private System.Windows.Forms.ToolStripComboBox toolStripComboBox1;
+		private System.Windows.Forms.ColumnHeader columnIP;
+		private System.Windows.Forms.ColumnHeader columnName;
+		private System.Windows.Forms.ColumnHeader columnCountry;
+		private System.Windows.Forms.ColumnHeader columnHostName;
+		public System.Windows.Forms.ListView playerList;
+		private System.Windows.Forms.Timer updateTimer;
     }
 }
 

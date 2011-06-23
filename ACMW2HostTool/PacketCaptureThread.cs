@@ -86,27 +86,44 @@ namespace ACMW2Tool
 						//Read player entries
 						while (binaryReader.BaseStream.Length > binaryReader.BaseStream.Position)
 						{
-							MW2PartystatePlayer partyStatePlayer = new MW2PartystatePlayer(binaryReader);
+							MW2PartystatePlayer partystatePlayer = new MW2PartystatePlayer(binaryReader);
 
-							partystatePlayers[partyStatePlayer.externalIP] = partyStatePlayer;
+							if (partystatePlayer.externalIP == ipv4Packet.SourceAddress
+								|| partystatePlayer.internalIP == ipv4Packet.SourceAddress)
+								partystatePlayer.IsHost = true;
+
+							partystatePlayers[partystatePlayer.externalIP] = partystatePlayer;
 						}
+
+#if DEBUG
+						//Create the directory if it doesn't exist
+						String directory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + @"\ACMW2TPackets\";
+						Directory.CreateDirectory(directory);
+
+						//Create files
+						String filePath = directory + "0partystate-good-" + DateTime.Now.Ticks;
+
+						File.WriteAllBytes(filePath + ".bytes", ipv4Packet.Bytes);
+#endif
 					}
 				}
 				catch (Exception e)
 				{
+#if DEBUG
 					//Create the directory if it doesn't exist
-					if (!Directory.Exists("FailedPackets"))
-						Directory.CreateDirectory("FailedPackets");
+					String directory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + @"\ACMW2TPackets\";
+					Directory.CreateDirectory(directory);
 
 					//Create files
-					String filePath = @"FailedPackets\0partystate-" + DateTime.Now.Ticks;
-					//File.WriteAllBytes(filePath + ".bytes", packet.Ethernet.Payload.ToArray());
+					String filePath = directory + "0partystate-fail-" + DateTime.Now.Ticks;
+
+					File.WriteAllBytes(filePath + ".bytes", ipv4Packet.Bytes);
 					File.WriteAllLines(filePath + ".txt", new String[] { e.Message, e.StackTrace });
+#endif
 				}
 			}
 
 			//Invoke the player list to asynchronously update it
-			//toolUI.playerList.BeginInvoke(new UpdatePlayerListDelegate(UpdatePlayerList), new Object[] { ipv4Packet.SourceAddress, ipv4Packet.DestinationAddress });
 			toolUI.playerList.BeginInvoke(new UpdatePlayerListDelegate(UpdatePlayerList), ipv4Packet.SourceAddress, ipv4Packet.DestinationAddress);
 		}
 
@@ -116,7 +133,7 @@ namespace ACMW2Tool
 			ListView.ListViewItemCollection playerItems = toolUI.playerList.Items;
 
 			//Update the source
-			if (!playerItems.ContainsKey(sourceIP.ToString()))
+			if (playerItems.ContainsKey(sourceIP.ToString()))
 				((ListViewPlayerItem)playerItems[sourceIP.ToString()]).PlayerLastTime = DateTime.Now;
 			else
 				playerItems.Add(new ListViewPlayerItem(lookupService, sourceIP));
@@ -129,18 +146,8 @@ namespace ACMW2Tool
 
 			//Update entries
 			foreach (ListViewPlayerItem playerItem in playerItems)
-			{
-				//Remove the entry if it wasn't updated for a long time
-				if (TimeSpan.FromTicks(DateTime.Now.Ticks - playerItem.PlayerLastTime.Ticks).Seconds > 15)
-				{
-					playerItem.Remove();
-					continue;
-				}
-
-				if (partystatePlayers.ContainsKey(IPAddress.Parse(playerItem.PlayerIP)) && playerItem.PartystatePlayer == null)
+				if (partystatePlayers.ContainsKey(IPAddress.Parse(playerItem.PlayerIP)))
 					playerItem.PartystatePlayer = partystatePlayers[IPAddress.Parse(playerItem.PlayerIP)];
-
-			}
 		}
 	}
 }
