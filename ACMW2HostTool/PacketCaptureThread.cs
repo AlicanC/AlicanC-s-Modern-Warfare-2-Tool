@@ -44,7 +44,7 @@ namespace ACMW2Tool
 			//Stop capture
 			if (captureDevice.Started)
 				captureDevice.StopCapture();
-			
+
 			//Abort the thread
 			packetCaptureThread.Abort();
 		}
@@ -70,55 +70,58 @@ namespace ACMW2Tool
 
 			using (BinaryReader binaryReader = new BinaryReader(new MemoryStream(ipv4Packet.Bytes)))
 			{
-				//Read the packet header
-				MW2PacketHeader packetHeader = new MW2PacketHeader(binaryReader);
-
-				//The rest is not fully functional so we will be logging any exceptions
+				//This is not fully functional so we will just try
 				try
 				{
-					//Read the party state header
-					if (packetHeader.packetType == "0partystate")
+					//Read the packet header
+					MW2PacketHeader packetHeader = new MW2PacketHeader(binaryReader);
+					
+					try
 					{
-						/* DEBUG */System.Diagnostics.Debug.WriteLine("0partystate from {0}", ipv4Packet.SourceAddress);
-
-						MW2PartystateHeader partystateHeader = new MW2PartystateHeader(binaryReader);
-
-						//Read player entries
-						while (binaryReader.BaseStream.Length > binaryReader.BaseStream.Position)
+						//Read the party state header
+						if (packetHeader.packetType == "0partystate")
 						{
-							MW2PartystatePlayer partystatePlayer = new MW2PartystatePlayer(binaryReader);
+								MW2PartystateHeader partystateHeader = new MW2PartystateHeader(binaryReader);
 
-							if (partystatePlayer.externalIP == ipv4Packet.SourceAddress
-								|| partystatePlayer.internalIP == ipv4Packet.SourceAddress)
-								partystatePlayer.IsHost = true;
+								//Read player entries
+								while (binaryReader.BaseStream.Length > binaryReader.BaseStream.Position)
+								{
+									try
+									{
+										MW2PartystatePlayer partystatePlayer = new MW2PartystatePlayer(binaryReader);
 
-							partystatePlayers[partystatePlayer.externalIP] = partystatePlayer;
-						}
+										if (partystatePlayer.externalIP == ipv4Packet.SourceAddress
+											|| partystatePlayer.internalIP == ipv4Packet.SourceAddress)
+											partystatePlayer.IsHost = true;
 
+										partystatePlayers[partystatePlayer.externalIP] = partystatePlayer;
+									}
+									catch (Exception e)
+									{
 #if DEBUG
-						//Create the directory if it doesn't exist
-						String directory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + @"\ACMW2TPackets\";
-						Directory.CreateDirectory(directory);
-
-						//Create files
-						String filePath = directory + "0partystate-good-" + DateTime.Now.Ticks;
-
-						File.WriteAllBytes(filePath + ".bytes", ipv4Packet.Bytes);
+										Program.LogGAF(packetHeader.packetType + "-player-fail-" + DateTime.Now.Ticks + ".bytes", ipv4Packet.Bytes);
+										Program.LogGAF(packetHeader.packetType + "-player-fail-" + DateTime.Now.Ticks + ".txt", new String[] { e.Message, e.StackTrace });
+#endif
+									}
+								}
+						}
+#if DEBUG
+						Program.LogGAF(packetHeader.packetType + "-good-" + DateTime.Now.Ticks + ".bytes", ipv4Packet.Bytes);
+#endif
+					}
+					catch (Exception e)
+					{
+#if DEBUG
+						Program.LogGAF(packetHeader.packetType + "-fail-" + DateTime.Now.Ticks + ".bytes", ipv4Packet.Bytes);
+						Program.LogGAF(packetHeader.packetType + "-fail-" + DateTime.Now.Ticks + ".txt", new String[] { e.Message, e.StackTrace });
 #endif
 					}
 				}
 				catch (Exception e)
 				{
 #if DEBUG
-					//Create the directory if it doesn't exist
-					String directory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + @"\ACMW2TPackets\";
-					Directory.CreateDirectory(directory);
-
-					//Create files
-					String filePath = directory + "0partystate-fail-" + DateTime.Now.Ticks;
-
-					File.WriteAllBytes(filePath + ".bytes", ipv4Packet.Bytes);
-					File.WriteAllLines(filePath + ".txt", new String[] { e.Message, e.StackTrace });
+					Program.LogGAF("header-fail-" + DateTime.Now.Ticks + ".bytes", ipv4Packet.Bytes);
+					Program.LogGAF("header-fail-" + DateTime.Now.Ticks + ".txt", new String[] { e.Message, e.StackTrace });
 #endif
 				}
 			}
