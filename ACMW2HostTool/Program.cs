@@ -27,22 +27,30 @@ namespace ACMW2Tool
 #if DEBUG
 		public static void LogGAF(String name, Byte[] bytes)
 		{
-			//Create the log directory if it doesn't exist
-			String directory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + @"\ACMW2TPackets\";
-			Directory.CreateDirectory(directory);
+			try
+			{
+				//Create the log directory if it doesn't exist
+				String directory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + @"\ACMW2TPackets\";
+				Directory.CreateDirectory(directory);
 
-			//Create the file
-			File.WriteAllBytes(directory + name, bytes);
+				//Create the file
+				File.WriteAllBytes(directory + name, bytes);
+			}
+			catch { }
 		}
 
 		public static void LogGAF(String name, String[] lines)
 		{
-			//Create the log directory if it doesn't exist
-			String directory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + @"\ACMW2TPackets\";
-			Directory.CreateDirectory(directory);
+			try
+			{
+				//Create the log directory if it doesn't exist
+				String directory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + @"\ACMW2TPackets\";
+				Directory.CreateDirectory(directory);
 
-			//Create the file
-			File.WriteAllLines(directory + name, lines);
+				//Create the file
+				File.WriteAllLines(directory + name, lines);
+			}
+			catch { }
 		}
 #endif
     }

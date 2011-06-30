@@ -75,38 +75,39 @@ namespace ACMW2Tool
 				{
 					//Read the packet header
 					MW2PacketHeader packetHeader = new MW2PacketHeader(binaryReader);
-					
+
 					try
 					{
 						//Read the party state header
 						if (packetHeader.packetType == "0partystate")
 						{
-								MW2PartystateHeader partystateHeader = new MW2PartystateHeader(binaryReader);
+							MW2PartystateHeader partystateHeader = new MW2PartystateHeader(binaryReader);
 
-								//Read player entries
-								while (binaryReader.BaseStream.Length > binaryReader.BaseStream.Position)
+							//Read player entries
+							while (binaryReader.BaseStream.Length > binaryReader.BaseStream.Position)
+							{
+								try
 								{
-									try
-									{
-										MW2PartystatePlayer partystatePlayer = new MW2PartystatePlayer(binaryReader);
+									MW2PartystatePlayer partystatePlayer = new MW2PartystatePlayer(binaryReader);
 
-										if (partystatePlayer.externalIP == ipv4Packet.SourceAddress
-											|| partystatePlayer.internalIP == ipv4Packet.SourceAddress)
-											partystatePlayer.IsHost = true;
+									if (partystatePlayer.externalIP == ipv4Packet.SourceAddress
+										|| partystatePlayer.internalIP == ipv4Packet.SourceAddress)
+										partystatePlayer.IsHost = true;
 
-										partystatePlayers[partystatePlayer.externalIP] = partystatePlayer;
-									}
-									catch (Exception e)
-									{
-#if DEBUG
-										Program.LogGAF(packetHeader.packetType + "-player-fail-" + DateTime.Now.Ticks + ".bytes", ipv4Packet.Bytes);
-										Program.LogGAF(packetHeader.packetType + "-player-fail-" + DateTime.Now.Ticks + ".txt", new String[] { e.Message, e.StackTrace });
-#endif
-									}
+									partystatePlayers[partystatePlayer.externalIP] = partystatePlayer;
 								}
+								catch (Exception e)
+								{
+#if DEBUG
+									Program.LogGAF(packetHeader.packetType + "-player-fail-" + DateTime.Now.Ticks + ".bytes", ipv4Packet.Bytes);
+									Program.LogGAF(packetHeader.packetType + "-player-fail-" + DateTime.Now.Ticks + ".txt", new String[] { e.Message, e.StackTrace });
+#endif
+								}
+							}
 						}
 #if DEBUG
-						Program.LogGAF(packetHeader.packetType + "-good-" + DateTime.Now.Ticks + ".bytes", ipv4Packet.Bytes);
+						if (packetHeader.packetType == "0partystate")
+							Program.LogGAF(packetHeader.packetType + "-good-" + DateTime.Now.Ticks + ".bytes", ipv4Packet.Bytes);
 #endif
 					}
 					catch (Exception e)
